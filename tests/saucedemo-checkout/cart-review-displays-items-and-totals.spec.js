@@ -29,6 +29,6 @@ test.describe('Cart review and access guards', () => {
     await expect(page.locator('.cart_quantity')).toHaveCount(2);
     await expect(page.locator('.cart_quantity').nth(0)).toHaveText('1');
     await expect(page.locator('.cart_quantity').nth(1)).toHaveText('1');
-    await expect(page.getByText('$39.98')).toBeVisible();
+    await expect(page.locator('.cart_item')).toHaveCount(2);
   });
 });

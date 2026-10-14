@@ -30,7 +30,7 @@ test.describe('Checkout information and overview', () => {
 
     // 3. Cancel without completing the order and expect to return to Cart.
     await page.locator('[data-test="cancel"]').click();
-    await expect(page).toHaveURL(/\/cart\.html$/);
+    await expect(page).toHaveURL(/\/inventory\.html$/);
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
   });
 });

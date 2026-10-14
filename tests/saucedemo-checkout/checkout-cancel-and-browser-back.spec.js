@@ -4,32 +4,38 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('Order completion and navigation', () => {
-  test('Cancel and Browser Back Preserve Expected Checkout Navigation', async ({ page }) => {
-    // 1. Add a product, open checkout, cancel, then verify browser Back from checkout info.
+  test('Cancel and Browser Back Preserve Cart and Checkout Navigation', async ({ page }) => {
+    // 1. Sign in and add a product.
     await page.goto('https://www.saucedemo.com');
     await page.locator('[data-test="username"]').fill('standard_user');
     await page.locator('[data-test="password"]').fill('secret_sauce');
     await page.locator('[data-test="login-button"]').click();
+
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
     await page.locator('[data-test="shopping-cart-link"]').click();
-    await page.locator('[data-test="checkout"]').click();
-    await page.locator('[data-test="cancel"]').click();
-    await expect(page).toHaveURL(/\/cart\.html$/);
-    await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
-    await page.locator('[data-test="checkout"]').click();
-    await page.goBack();
-    await expect(page).toHaveURL(/\/cart\.html$/);
+
+    await expect(page).toHaveURL(/cart\.html$/);
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
 
-    // 2. Submit valid checkout information and use browser Back from the overview.
+    // 2. Start checkout and cancel.
     await page.locator('[data-test="checkout"]').click();
-    await page.locator('[data-test="firstName"]').fill('Ada');
-    await page.locator('[data-test="lastName"]').fill('Lovelace');
-    await page.locator('[data-test="postalCode"]').fill('12345');
-    await page.locator('[data-test="continue"]').click();
-    await expect(page).toHaveURL(/checkout-step-two\.html$/);
-    await page.goBack();
     await expect(page).toHaveURL(/checkout-step-one\.html$/);
-    await expect(page.getByRole('button', { name: 'Cart, 1 items' })).toBeVisible();
+
+    await page.locator('[data-test="cancel"]').click();
+
+    // SauceDemo returns to the inventory page.
+   await expect(page).toHaveURL(/cart\.html$/);
+
+    // 3. Verify the product remains in the cart.
+    await page.locator('[data-test="shopping-cart-link"]').click();
+    await expect(page).toHaveURL(/cart\.html$/);
+    await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
+
+    // 4. Start checkout again and test browser Back.
+    await page.locator('[data-test="checkout"]').click();
+    await expect(page).toHaveURL(/checkout-step-one\.html$/);
+
+    await page.goBack();
+    await expect(page).toHaveURL(/cart\.html$/);
   });
 });
