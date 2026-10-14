@@ -1,4 +1,4 @@
-# SCRUM-101 Checkout Test Report
+﻿# SCRUM-101 Checkout Test Report
 
 ## Executive Summary
 
@@ -6,9 +6,9 @@
 - **Planned scenarios:** 9
 - **Manual scenarios executed:** 9
 - **Automated scenarios:** 9, run in Chromium, Firefox, and WebKit
-- **Automated executions:** 27 total — 15 passed, 12 failed
+- **Automated executions:** 27 total ΓÇö 15 passed, 12 failed
 - **Distinct failed scenarios:** 4, each failing consistently in all three browsers
-- **Overall status:** **FAIL** — the primary purchase path works, but cart total display, empty-cart protection, invalid-data validation, and overview cancellation do not meet the story.
+- **Overall status:** **FAIL** ΓÇö the primary purchase path works, but cart total display, empty-cart protection, invalid-data validation, and overview cancellation do not meet the story.
 
 The planner and healer custom agents could not start because their configured model (`Claude Sonnet 4.6`) is unavailable in this environment. The available planner and generator MCP tools were used, and test failures were examined with the Playwright test debugger. The failed assertions represent observed application behavior that conflicts with SCRUM-101, not test selector or timing defects. They remain failures rather than being weakened or skipped.
 
@@ -19,16 +19,16 @@ The planner and healer custom agents could not start because their configured mo
 | Cart review | **FAIL** | Both products, descriptions, quantities, prices, and Continue Shopping/Checkout controls were present. The cart did not display the `$39.98` combined total required by AC1. |
 | Empty-cart guard | **FAIL** | Checkout remained available with an empty cart. With valid checkout information, the site reached an overview displaying `$0.00` and a Finish button. Finish was not clicked. |
 | Authentication guard | **PASS** | Direct navigation to `/cart.html` and `/checkout-step-one.html` while signed out redirected to the login page. |
-| Required checkout fields | **PASS** | Empty submission prompted “First Name is required”; subsequent submissions identified “Last Name is required” and “Postal Code is required.” |
+| Required checkout fields | **PASS** | Empty submission prompted ΓÇ£First Name is requiredΓÇ¥; subsequent submissions identified ΓÇ£Last Name is requiredΓÇ¥ and ΓÇ£Postal Code is required.ΓÇ¥ |
 | Invalid checkout information | **FAIL** | Nonempty values `A!@#`, `O'Neil-42`, and `not-a-postal-code` were accepted and advanced to the overview without validation. |
 | Order overview and cancel | **FAIL** | Item details, SauceCard payment text, shipping text, `$39.98` subtotal, `$3.20` tax, and `$43.18` total were correct. Cancel returned to `/inventory.html`, not the cart as specified by the business rule. |
-| Order completion and cart clearing | **PASS** | Finish displayed “Thank you for your order!” and Back Home; after returning home the cart was empty. |
+| Order completion and cart clearing | **PASS** | Finish displayed ΓÇ£Thank you for your order!ΓÇ¥ and Back Home; after returning home the cart was empty. |
 | Cancel and browser Back | **PASS** | Cancel from checkout information and browser Back preserved the cart item. Back from the overview returned to checkout information with the cart item still present. |
-| Mobile checkout | **PASS** | Checkout remained usable at 390×844. The measured document width was 375 px against a 390 px viewport, with no horizontal overflow. |
+| Mobile checkout | **PASS** | Checkout remained usable at 390├ù844. The measured document width was 375 px against a 390 px viewport, with no horizontal overflow. |
 
 ## Screenshot Evidence
 
-Saved screenshots are in the workspace’s `.playwright-mcp` evidence folder:
+Saved screenshots are in the workspaceΓÇÖs `.playwright-mcp` evidence folder:
 
 - [Cart review](../.playwright-mcp/SCRUM-101-cart-review.png)
 - [Required-field error](../.playwright-mcp/SCRUM-101-required-field-error.png)
@@ -52,10 +52,10 @@ Passing scenarios in each project: authentication guard, required fields, order 
 
 Failing scenarios in each project:
 
-1. Cart Review Displays Added Items and Totals — expected cart total is absent.
-2. Empty Cart Cannot Proceed to Checkout — empty cart enters checkout instead of remaining in cart.
-3. Invalid Checkout Information Is Rejected — malformed values advance to the overview.
-4. Overview Shows Order Details and Cancel Returns to Cart — Cancel returns to inventory.
+1. Cart Review Displays Added Items and Totals ΓÇö expected cart total is absent.
+2. Empty Cart Cannot Proceed to Checkout ΓÇö empty cart enters checkout instead of remaining in cart.
+3. Invalid Checkout Information Is Rejected ΓÇö malformed values advance to the overview.
+4. Overview Shows Order Details and Cancel Returns to Cart ΓÇö Cancel returns to inventory.
 
 The Playwright debugger reproduced the invalid-information failure and showed the overview page with the item and Finish control. No selector or timing remediation was indicated. The custom healer agent was unavailable, and no changes were made that would hide these acceptance-criteria failures.
 
@@ -63,7 +63,7 @@ The Playwright debugger reproduced the invalid-information failure and showed th
 
 These are provisional report IDs only; no external defect tracker was configured or updated.
 
-### SCRUM-101-D1 — Cart does not display the combined item total
+### SCRUM-101-D1 ΓÇö Cart does not display the combined item total
 
 - **Severity:** Medium
 - **Area:** AC1, Cart Review
@@ -74,7 +74,7 @@ These are provisional report IDs only; no external defect tracker was configured
 - **Evidence:** [Cart review screenshot](../.playwright-mcp/SCRUM-101-cart-review.png)
 - **Environment:** SauceDemo, Chromium / Firefox / WebKit.
 
-### SCRUM-101-D2 — Empty cart can reach a completable checkout
+### SCRUM-101-D2 ΓÇö Empty cart can reach a completable checkout
 
 - **Severity:** High
 - **Area:** Business rule 3
@@ -85,7 +85,7 @@ These are provisional report IDs only; no external defect tracker was configured
 - **Evidence:** [Empty-cart checkout screenshot](../.playwright-mcp/SCRUM-101-empty-cart-checkout.png)
 - **Environment:** SauceDemo, Chromium / Firefox / WebKit.
 
-### SCRUM-101-D3 — Invalid nonempty checkout information is accepted
+### SCRUM-101-D3 ΓÇö Invalid nonempty checkout information is accepted
 
 - **Severity:** Medium
 - **Area:** AC5
@@ -96,7 +96,7 @@ These are provisional report IDs only; no external defect tracker was configured
 - **Evidence:** [Malformed input accepted at overview screenshot](../.playwright-mcp/SCRUM-101-invalid-checkout-accepted.png)
 - **Environment:** SauceDemo, Chromium / Firefox / WebKit.
 
-### SCRUM-101-D4 — Cancel from the order overview returns to Products, not Cart
+### SCRUM-101-D4 ΓÇö Cancel from the order overview returns to Products, not Cart
 
 - **Severity:** Medium
 - **Area:** Business rule 5
@@ -110,22 +110,22 @@ These are provisional report IDs only; no external defect tracker was configured
 
 | Requirement | Manual coverage | Automated coverage | Status |
 |---|---|---|---|
-| AC1 — Cart items, details, total, and actions | Items/details/actions verified; total missing | Covered by cart review scenario | **Partial / fail** |
-| AC2 — Checkout fields and required-field errors | All three sequential required-field errors verified | Covered by required-fields scenario | **Pass** |
-| AC3 — Overview items, payment/shipping, totals, cancel | Details and calculations pass; Cancel destination fails | Covered by overview/cancel scenario | **Partial / fail** |
-| AC4 — Confirmation and Back Home | Success message, navigation, and cart clearing verified | Covered by order-completion scenario | **Pass** |
-| AC5 — Reject invalid checkout data | Invalid data accepted | Covered by invalid-information scenario | **Fail** |
-| Business rule 2 — Login required | Direct protected routes redirect to login | Covered by authentication scenario | **Pass** |
-| Business rule 3 — Cart cannot be empty | Empty order reaches overview and Finish | Covered by empty-cart scenario | **Fail** |
-| Business rule 4 — Confirmation clears cart | Cart empty after completion | Covered by order-completion scenario | **Pass** |
-| Business rule 5 — Cancel returns to cart | Information-step Cancel passes; overview Cancel does not | Covered by navigation/overview scenarios | **Partial / fail** |
-| Responsive checkout | Mobile-size layout and control positioning checked | Covered at 390×844 | **Pass at tested viewport** |
+| AC1 ΓÇö Cart items, details, total, and actions | Items/details/actions verified; total missing | Covered by cart review scenario | **Partial / fail** |
+| AC2 ΓÇö Checkout fields and required-field errors | All three sequential required-field errors verified | Covered by required-fields scenario | **Pass** |
+| AC3 ΓÇö Overview items, payment/shipping, totals, cancel | Details and calculations pass; Cancel destination fails | Covered by overview/cancel scenario | **Partial / fail** |
+| AC4 ΓÇö Confirmation and Back Home | Success message, navigation, and cart clearing verified | Covered by order-completion scenario | **Pass** |
+| AC5 ΓÇö Reject invalid checkout data | Invalid data accepted | Covered by invalid-information scenario | **Fail** |
+| Business rule 2 ΓÇö Login required | Direct protected routes redirect to login | Covered by authentication scenario | **Pass** |
+| Business rule 3 ΓÇö Cart cannot be empty | Empty order reaches overview and Finish | Covered by empty-cart scenario | **Fail** |
+| Business rule 4 ΓÇö Confirmation clears cart | Cart empty after completion | Covered by order-completion scenario | **Pass** |
+| Business rule 5 ΓÇö Cancel returns to cart | Information-step Cancel passes; overview Cancel does not | Covered by navigation/overview scenarios | **Partial / fail** |
+| Responsive checkout | Mobile-size layout and control positioning checked | Covered at 390├ù844 | **Pass at tested viewport** |
 
-Browser coverage is complete for the configured desktop Chromium, Firefox, and WebKit projects. Mobile coverage was manually inspected and automated at a 390×844 viewport; device-specific emulation and additional viewport sizes remain untested.
+Browser coverage is complete for the configured desktop Chromium, Firefox, and WebKit projects. Mobile coverage was manually inspected and automated at a 390├ù844 viewport; device-specific emulation and additional viewport sizes remain untested.
 
 ## Summary and Recommendations
 
-The main happy path—from cart through confirmation—works in all three tested browser projects. Required-field validation, authentication protection, browser Back behavior, cart clearing, and the tested mobile viewport also passed.
+The main happy pathΓÇöfrom cart through confirmationΓÇöworks in all three tested browser projects. Required-field validation, authentication protection, browser Back behavior, cart clearing, and the tested mobile viewport also passed.
 
 Prioritize the empty-cart guard, since the application allows a zero-value order to reach Finish. Then add validation for malformed checkout data, display the cart total, and align overview Cancel behavior with the story. Re-run the failing tests across all three browser projects after the application changes. No application source code was in this workspace, so product defects could not be fixed here.
 

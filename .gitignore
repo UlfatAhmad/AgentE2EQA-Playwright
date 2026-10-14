@@ -6,3 +6,13 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+# Playwright MCP temporary files
+.playwright-mcp/
+
+# VS Code local settings
+.vscode/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
