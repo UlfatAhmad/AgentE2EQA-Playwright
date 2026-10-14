@@ -1,5 +1,5 @@
 # Agentic AI-Powered E2E QA Automation Framework
-
+[![Playwright Tests](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions/workflows/playwright.yml)
 An AI-assisted end-to-end testing portfolio project demonstrating a workflow from a user story to a test plan, exploratory browser testing, Playwright automation, and a recorded test report. The implemented example tests the e-commerce checkout flow on SauceDemo.
 
 ## 1. Project Overview
