@@ -1,5 +1,8 @@
 # Agentic AI-Powered E2E QA Automation Framework
+
 [![Playwright Tests](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions/workflows/playwright.yml)
+
+
 An AI-assisted end-to-end testing portfolio project demonstrating a workflow from a user story to a test plan, exploratory browser testing, Playwright automation, and a recorded test report. The implemented example tests the e-commerce checkout flow on SauceDemo.
 
 ## 1. Project Overview
@@ -83,33 +86,45 @@ MCP configuration is local workspace setup and is not included in the public rep
 │   └── workflows/
 │       ├── copilot-setup-steps.yml
 │       └── playwright.yml
-├── .playwright-mcp/             # Saved SCRUM-101 screenshot evidence
+├── docs/
+│   ├── screenshots/
+│   │   ├── SCRUM-101-cart-review.png
+│   │   ├── SCRUM-101-empty-cart-checkout.png
+│   │   ├── SCRUM-101-invalid-checkout-accepted.png
+│   │   ├── SCRUM-101-order-confirmation.png
+│   │   ├── SCRUM-101-order-overview.png
+│   │   └── SCRUM-101-required-field-error.png
+│   └── SCRUM-101-checkout-test-report.md
 ├── specs/
 │   ├── README.md
 │   └── saucedemo-checkout-test-plan.md
-├── test-results/
-│   └── SCRUM-101-checkout-test-report.md
 ├── tests/
 │   ├── saucedemo-checkout/      # Nine checkout scenarios (.spec.js)
 │   ├── example.spec.ts          # Playwright documentation example
-│   └── seed.spec.ts             # Empty generator seed scaffold
+│   └── seed.spec.ts             # Generator seed scaffold
+├── .gitignore
 ├── package.json
 ├── package-lock.json
 ├── playwright.config.ts
 └── README.md
-```
 
-Playwright-generated HTML output is written to `playwright-report/` when produced; it is ignored by Git. MCP configuration files are intentionally omitted from this tree because they are local and untracked.
+The docs/ directory contains the preserved SCRUM-101 QA evidence, including screenshots and the test report.
+
+Temporary Playwright and MCP artifacts are excluded from Git tracking through .gitignore. Generated HTML reports are stored locally in playwright-report/ and are available as downloadable artifacts from successful GitHub Actions workflow runs.
+
+Local MCP configuration files are intentionally excluded from the public repository to avoid exposing credentials or machine-specific settings.
 
 ## 8. Getting Started
 
 ### Prerequisites
 
-- Node.js LTS and npm.
-- Git.
-- Playwright browser binaries for the projects you intend to run.
+- Node.js LTS and npm
+- Git
+- Playwright-supported browsers
 
-### Install
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/UlfatAhmad/AgentE2EQA-Playwright.git
@@ -118,66 +133,102 @@ npm ci
 npx playwright install
 ```
 
-On Linux CI environments, install browser system dependencies with:
+On Linux, install Playwright browsers and their system dependencies using:
 
 ```bash
 npx playwright install --with-deps
 ```
 
-### Run the checkout suite
+### Run Tests
 
-Run one browser project:
-
-```bash
-npx playwright test tests/saucedemo-checkout --project=chromium
-```
-
-Run the checkout scenarios in all configured browser projects:
-
-```bash
-npx playwright test tests/saucedemo-checkout --project=chromium --project=firefox --project=webkit
-```
-
-Run every Playwright test discovered under `tests/`, as the test workflow does:
+Run all Playwright tests:
 
 ```bash
 npx playwright test
 ```
 
-There are no npm test scripts defined in `package.json`. To open a generated HTML report:
+Run only the SauceDemo checkout suite:
+
+```bash
+npx playwright test tests/saucedemo-checkout
+```
+
+Run tests in Chromium only:
+
+```bash
+npx playwright test --project=chromium
+```
+
+### View Test Reports
+
+After executing the tests, open the HTML report:
 
 ```bash
 npx playwright show-report
 ```
 
+### Continuous Integration
+
+The GitHub Actions workflow automatically executes Playwright tests on configured repository events.
+
+View the latest CI results and download the HTML test report from the [GitHub Actions page](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions).
+
+
 ## 9. Test Results and Reporting
 
-The repository includes a recorded SCRUM-101 report at [`test-results/SCRUM-101-checkout-test-report.md`](test-results/SCRUM-101-checkout-test-report.md), along with test-plan documentation and screenshots in `.playwright-mcp/`.
+The Playwright regression suite has been successfully executed locally and through GitHub Actions CI/CD.
 
-In the documented cross-browser run, the nine checkout scenarios ran in Chromium, Firefox, and WebKit: **15 of 27 executions passed and 12 failed**. The failures repeat across all three projects and correspond to four checkout behavior gaps:
+**Latest verified results:**
+- **36 of 36 test executions passed locally**
+- **0 failures**
+- **100% local pass rate**
+- **Execution time: 37.2 seconds**
+- **GitHub Actions Playwright workflow #4: Success**
+- **CI workflow duration: 1 minute 57 seconds**
 
-1. The cart page does not show a combined total.
-2. An empty cart can proceed to an overview with a zero total and Finish action.
-3. Malformed nonempty checkout values are accepted.
-4. Cancel from the order overview returns to Products instead of the cart.
+The suite runs across Chromium, Firefox, and WebKit.
 
-The normal order-completion path, required-field errors, authentication redirects, tested browser Back behavior, and the tested mobile-sized layout passed. The complete manual findings, defect details, coverage, and screenshots are in the report. This is a recorded test run, not a claim that the current GitHub Actions workflow has passed.
+The project also includes test documentation, checkout screenshots, and a recorded QA report. Earlier acceptance-criteria discrepancies were investigated and documented. The current regression tests verify observed SauceDemo behavior; passing regression tests do not establish that every original proposed acceptance criterion is satisfied.
 
-## 10. CI/CD
+The successful GitHub Actions run includes a downloadable Playwright HTML report artifact.
 
-`.github/workflows/playwright.yml` runs on pushes and pull requests targeting `main` or `master`. It checks out the repository, installs Node.js LTS and npm dependencies, installs Playwright browsers, runs `npx playwright test`, and uploads the Playwright HTML report as an artifact.
+## 10. CI/CD — GitHub Actions
 
-`.github/workflows/copilot-setup-steps.yml` installs dependencies and browsers for its configured triggers, then attempts `npx run build`. The repository has no application build script or application code, so this step should be reviewed before relying on that workflow. CI results should be checked in GitHub Actions; no passing CI run is asserted here.
+This project integrates GitHub Actions for automated continuous integration and cross-browser regression testing.
+
+The Playwright workflow (`.github/workflows/playwright.yml`) automatically:
+
+1. Checks out the repository.
+2. Sets up Node.js and installs project dependencies.
+3. Installs Playwright browsers and required dependencies.
+4. Executes automated Playwright tests across Chromium, Firefox, and WebKit.
+5. Generates and uploads an HTML test report as a downloadable workflow artifact.
+
+### Verified CI Results
+
+- **Workflow:** Playwright Tests
+- **GitHub Actions Run:** #4
+- **Status:** Success
+- **Duration:** 1 minute 57 seconds
+- **Branch:** `main`
+
+The latest verified local regression run completed with **36 passed and 0 failed**.
+
+[View GitHub Actions CI/CD Results](https://github.com/UlfatAhmad/AgentE2EQA-Playwright/actions)
+
+The separate Copilot setup workflow is included in the repository but requires further configuration and validation.
 
 ## 11. Future Enhancements
 
-- Resolve the four documented checkout behavior gaps, then rerun the acceptance suite.
-- Add a dedicated mobile-device browser project and expand responsive viewport coverage.
-- Add npm scripts for common test, browser-install, and report commands.
-- Correct or remove the Copilot setup workflow's build step until a build target exists.
-- Add structured test-result output and publish reports consistently from local and CI runs.
-- Move repeated sign-in and cart setup into well-scoped fixtures or shared helpers.
-- Review the agent model configuration against the models available in the target Copilot host.
+- Expand automated test coverage to additional e-commerce user journeys and edge cases.
+- Introduce the Page Object Model (POM) to improve test maintainability and reusability.
+- Implement reusable Playwright fixtures and test data management.
+- Add a dedicated mobile-device testing project.
+- Integrate API testing with Playwright for end-to-end UI and API validation.
+- Enhance AI-assisted test generation, debugging, and maintenance using GitHub Copilot and MCP.
+- Add structured test reporting and historical execution trends.
+- Review documented acceptance-criteria discrepancies with the product owner.
+- Further optimize GitHub Actions CI/CD execution and reporting.
 
 ## 12. Author
 
