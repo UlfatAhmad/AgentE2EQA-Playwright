@@ -7,9 +7,7 @@ An AI-assisted end-to-end testing portfolio project demonstrating a workflow fro
 
 ## 1. Project Overview
 
-This project combines Playwright browser automation with purpose-built agent instructions and Model Context Protocol (MCP) server configuration. Its checkout example covers cart review, checkout form validation, order overview, order completion, authentication, navigation, and a mobile-sized viewport.
-
-The agents and MCP tools support test planning and generation workflows. Automation results are reported as observed: the current recorded checkout run includes failing acceptance-criteria checks and is not a fully passing suite.
+The agents and MCP tools support AI-assisted test planning, generation, execution, and debugging workflows. The latest verified local regression run completed successfully with **36 passed and 0 failed**, and the Playwright GitHub Actions workflow also completed successfully. Earlier acceptance-criteria discrepancies are preserved in the QA documentation, while the current automated tests validate observed SauceDemo behavior.
 
 ## 2. Technology Stack
 
@@ -60,7 +58,7 @@ The checkout suite is under `tests/saucedemo-checkout/` and follows the SCRUM-10
 - Order confirmation and cart clearing.
 - Checkout usability at a mobile-sized viewport.
 
-Several scenarios intentionally assert acceptance criteria that the current application does not satisfy. Their failures are documented below and are not suppressed to produce a passing result.
+The checkout test suite validates the application's observed behavior across positive, negative, and navigation scenarios. Earlier testing identified differences between the proposed acceptance criteria and actual SauceDemo behavior; these findings are preserved in the QA documentation. The latest automated regression run completed with **36 passed and 0 failed** across Chromium, Firefox, and WebKit. Passing tests confirm the implemented assertions, but do not imply that every original acceptance criterion has been met.
 
 ## 6. MCP Integration
 
